@@ -1,0 +1,144 @@
+******************************************************************
+
+MM        MM Y     Y  SSSSSS   H     H  EEEEEEE  L        L
+M M      M M  Y   Y  S      S  H     H  E        L        L
+M  M    M  M   Y Y    SS       H     H  E        L        L
+M   M  M   M    Y       SS     HHHHHHH  EEEEEEE  L        L 
+M    MM    M    Y         SS   H     H  E        L        L
+M          M    Y    S      S  H     H  E        L        L
+M          M    Y     SSSSSS   H     H  EEEEEEE  LLLLLLL  LLLLLLL
+
+
+*****************************************************************
+Author: Kyle Shake
+******************************************************************
+Table of Contents:
+******************************************************************
+General				Line 30
+
+Files				Line 49
+
+Usage				Line 73
+
+Commands			Line 86
+
+Limitations			Line 138
+
+******************************************************************
+******************************************************************
+******************************************************************
+
+--------------------
+General:
+--------------------
+
+This program builds a shell that interactively executes Unix programs.
+It can read system commands typed by the user and then execute them
+either in parallel or one at a time.
+
+The shell also allows users to set variables to be used in commands as
+well as write commands on its command line using the '#' character. Any
+thing that comes after the comment delimiter will be ignored by the shell.
+
+Commands are constructed of tokens, which can be single words or
+strings surrounded by quotes. Tokens that start '^' or strings
+that contain words starting with '^' are subject to variable 
+substitution
+
+--------------------
+Files:
+--------------------
+
+Program Driver
+	--mshmain.cpp 	: responsible for keeping the shell open, calling the
+			scanner function and checking child processes.
+
+	--global.h	: holds all the include files, function declarations 
+			and global variable initializations
+
+	--global.cpp	: holds the definitions for the global functions used
+			throughout the program
+
+Scanner
+	--scanner.cpp	: responsible for scanning input to the shell, breaking 
+			it into tokens, stripping comments, and variable 
+			substituion
+
+Parser
+	--parser.cpp	: accepts the formatted input from the scanner, 
+			determines what action to take, and then completes the
+			command.
+
+--------------------
+Usage:
+--------------------
+
+Compile:
+	> make
+
+Execute:
+	> ./MYSHELL
+
+Command:
+	msh > <cmd> <tokens>
+
+--------------------
+Commands:
+--------------------
+setvar <variable> <value>
+	- Allows user to set any *reasonably long* variable name to the
+	token <value>
+	- Variable names ARE case sensitive
+
+setprompt <new prompt>
+	- Allows the user to set the prompt for the shell
+
+setdir <directory path>
+	- Allows the user to change the current working directory.
+	- Directory names may be absolute (starting with /) or relative
+	(not starting with /)
+
+showprocs
+	- Shows the user all the currently running child processes
+
+done <value>
+	- Ends the program with an exit status of <value>
+	- If value is not present, exits the program with a status of 0
+	- <value> must be a non-negative integer
+	- Ctrl+D also exits the program with a SIGINT status
+
+run <cmd> [param ...]
+	- Allows the user to run a system command <cmd> with optional
+	parameters [param...]
+	- If the <cmd> starts with /, it is a full path name starting at
+	the root of the file system
+	- If the <cmd> starts with ./, it is a path name to the current
+	working directory
+	- If the <cmd> starts anything else, the shell looks for <cmd> in
+	the PATH variable (Default is /bin:/usr/bin but user may change 
+	by assigning a different directory to the built-in variable PATH
+	-IMPORTANT: With this command, MYSHELL will WAIT until the program
+	finishes executing before it accepts another command
+
+fly <cmd> [param ...]
+	- Allows the user to run a system command <cmd> with optional
+	parameters [param...]
+	- Identical to the run command except it executes the command
+	in parallel to the shell (i.e. the shell will continue to accept
+	commands after a fly command)
+
+tovar <variable> <cmd> [param...]
+	- Allows the user to run a system command <cmd> with optional
+	parameters [param...] and assign the output of the command to
+	the variable <variable>
+	- Identical to the run command except for the assignment to 
+	variable feature.
+
+-------------------
+Limitations:
+-------------------
+
+The program does not recognize escaped characters such as
+\b, \n, etc...
+
+

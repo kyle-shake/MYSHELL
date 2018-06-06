@@ -1,0 +1,13 @@
+setvar HOME /home/kyle/
+setdir ^HOME
+setdir ./usr/bin
+setdir ../usr/bin
+setdir ^PATH
+setvar Myfile "/etc/hosts"
+run echo "my path is ^PATH"
+fly wc -w ^Myfile ^Myfile 
+fly /bin/sleep 10
+fly wc *
+setdir ^HOME
+fly wc *
+showprocs

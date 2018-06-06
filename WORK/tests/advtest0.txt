@@ -1,0 +1,5 @@
+setvar Myfiles "/home/kyle/Documents/CS270/Proj4/MYSHELL2_1/*"
+fly wc -w ^Myfiles
+setvar HOME "/home/kyle"
+setdir ^HOME
+run echo "Your HOME path is ^HOME"

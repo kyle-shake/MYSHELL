@@ -1,0 +1,16 @@
+setprompt kyleshl > 
+setprompt "kyleshl > "
+setprompt "    kyleshl>    "
+setvar HOME /home/kyle
+setvar DOCS /home/kyle/Documents/
+setvar USER Kyle
+setdir ^HOME
+setvar Myfiles "/home/kyle/Documents/CS270/Proj4/MYSHELL2_1/*"
+run ls -lt
+run ls ^DOCS
+run echo "Hello, ^USER" #Hello, Kyle
+tovar CHARCOUNT wc -m Documents/CS270/Proj4/MYSHELL2_1/*
+run echo ^CHARCOUNT
+fly wc -w ^Myfiles
+setvar ShowTokens 1
+done 1
